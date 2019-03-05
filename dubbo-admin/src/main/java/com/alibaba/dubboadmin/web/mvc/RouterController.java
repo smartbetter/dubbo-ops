@@ -96,18 +96,22 @@ public class RouterController {
 
 
     // service mapping
-    @RequestMapping("/governance/services/{service}/{type}")
-    public String servicerRouter(@PathVariable("service") String service, @PathVariable("type") String type,
+    @RequestMapping("/governance/services/{group}/{service}/{type}")
+    public String servicerRouter(@PathVariable("group") String group,
+                                 @PathVariable("service") String service, @PathVariable("type") String type,
                                  HttpServletRequest request, HttpServletResponse response, Model model) {
+        service = mergeParamGroupToService(group, service);
         model.addAttribute("service", service);
         return appRouter(null, "services", service, type, request, response, model);
     }
 
-    @RequestMapping("/governance/services/{service}/{type}/{action}")
+    @RequestMapping("/governance/services/{group}/{service}/{type}/{action}")
     public String serviceAction(@RequestParam Map<String, String> param,
+                                @PathVariable("group") String group,
                                 @PathVariable("service") String service, @PathVariable("type") String type,
                                 @PathVariable("action") String action, HttpServletRequest request,
                                 HttpServletResponse response, Model model) {
+        service = mergeParamGroupToService(group, service);
         for (Map.Entry<String, String> entry : param.entrySet()) {
             System.out.println("key: " + entry.getKey());
             System.out.println("value: " + entry.getValue());
@@ -116,24 +120,35 @@ public class RouterController {
         return appAction(param, null, "services", service, type, action, request, response, model);
     }
 
-    @RequestMapping("/governance/services/{service}/{type}/{id}/{action}")
+    @RequestMapping("/governance/services/{group}/{service}/{type}/{id}/{action}")
     public String serviceActionWithId(@RequestParam Map<String, Object> param,
-                                      @PathVariable("service") String service,
+                                      @PathVariable("group") String group, @PathVariable("service") String service,
                                       @PathVariable("type") String type, @PathVariable("id") String id,
                                       @PathVariable("action") String action, HttpServletRequest request, HttpServletResponse response, Model model) {
+        service = mergeParamGroupToService(group, service);
         String method = request.getMethod();
         String app = null;
         System.out.println("type: " + type);
         System.out.println("action: " + action);
         System.out.println("method: " + method);
         for (Map.Entry<String, Object> entry : param.entrySet()) {
-            if (entry.getKey().equals("application")) {
+            if ("application".equals(entry.getKey())) {
                 app = (String)entry.getValue();
             }
             System.out.println("key: " + entry.getKey());
             System.out.println("value: " + entry.getValue());
         }
         return appActionWithIdandAction(app, service, type, id, action, request, response, model);
+    }
+
+    /**
+     * fix group services 不显示详情的 bug, 使用 dubbo 需要强制设置 group 参数
+     * /governance/services/{service}/{type} 修改为 /governance/services/{group}/{service}/{type}
+     *
+     * @date 2018-10-31
+     */
+    private String mergeParamGroupToService(String group, String service) {
+        return group + "/" + service;
     }
 
     // app mapping all execute goes here
@@ -166,9 +181,9 @@ public class RouterController {
                 e.printStackTrace();
             }
         }
-        if (elements.equals("services")) {
+        if ("services".equals(elements)) {
             model.addAttribute("service", element);
-        } else if (elements.equals("addresses")) {
+        } else if ("addresses".equals(elements)) {
             model.addAttribute("address", element);
         }
 
@@ -220,9 +235,9 @@ public class RouterController {
         if (app != null) {
             model.addAttribute("app", app);
         }
-        if (elements.equals("services")) {
+        if ("services".equals(elements)) {
             model.addAttribute("service", element);
-        } else if (elements.equals("addresses")) {
+        } else if ("addresses".equals(elements)) {
             model.addAttribute("address", element);
         }
 
@@ -230,7 +245,7 @@ public class RouterController {
         if (name != null) {
             Object controller = SpringUtil.getBean(name);
             if (controller != null) {
-                if (request.getMethod().equals("POST")) {
+                if ("POST".equals(request.getMethod())) {
                     Method[] methods = controller.getClass().getDeclaredMethods();
                     for (Method method : methods) {
                         if (method.getName().equals(action)) {

@@ -61,7 +61,7 @@ public class WebConstants {
     /**
      * Help Url
      */
-    public static final String HELP_URL="https://github.com/apache/incubator-dubbo-ops";
+    public static final String HELP_URL="https://github.com/apache/dubbo-ops";
     Map<String, Object> context;
 
     public static final Map<String, String> mapper = new HashMap<>();

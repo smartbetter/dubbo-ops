@@ -24,31 +24,32 @@
         <a href="$provider.id/add"><img src="$rootContextPath.getURI("images/ico_add.png")" width="12"
                                         height="12"/><span class="ico_font">#springMessageText("copy", "copy")</span></a>
         <span class="ico_line">|</span>
+        <!-- fix 500 error 2018-10-31 -->
         <a href="#" onclick="showConfirm('#springMessageText(
-            "confirm.weight.doubling","confirm.weight.doubling")', '$provider.url', '../doubling?ids=$provider.id'); return false;"><img
+            "confirm.weight.doubling","confirm.weight.doubling")', '$provider.url', '../providers/$provider.id/doubling'); return false;"><img
                 src="$rootContextPath.getURI("images/ico_up.png")" width="12" height="12"/><span
                 class="ico_font">#springMessageText("weight.doubling", "weight.doubling")</span></a>
         <span class="ico_line">|</span>
         <a href="#" onclick="showConfirm('#springMessageText(
-            "confirm.weight.halving","confirm.weight.halving")', '$provider.url', '../halving?ids=$provider.id'); return false;"><img
+            "confirm.weight.halving","confirm.weight.halving")', '$provider.url', '../providers/$provider.id/halving'); return false;"><img
                 src="$rootContextPath.getURI("images/ico_down.png")" width="12" height="12"/><span
                 class="ico_font">#springMessageText("weight.halving", "weight.halving")</span></a>
         <span class="ico_line">|</span>
         #if($tool.isProviderEnabled($provider))
             <a href="#" onclick="showConfirm('#springMessageText(
-                "confirm.disable","confirm.disable")', '$provider.url', '../disable?ids=$provider.id'); return false;"><img
+                "confirm.disable","confirm.disable")', '$provider.url', '../providers/$provider.id/disable'); return false;"><img
                     src="$rootContextPath.getURI("images/ico_disable.png")" width="12" height="12"/><span
                     class="ico_font">#springMessageText("disable", "disable")</span></a>
         #else
             <a href="#" onclick="showConfirm('#springMessageText(
-                "confirm.enable", "confirm.enable")', '$provider.url', '../enable?ids=$provider.id'); return false;"><img
+                "confirm.enable", "confirm.enable")', '$provider.url', '../providers/$provider.id/enable'); return false;"><img
                     src="$rootContextPath.getURI("images/ico_enable.png")" width="12" height="12"/><span
                     class="ico_font">#springMessageText("enable", "enable")</span></a>
         #end
         #if(! $provider.dynamic)
             <span class="ico_line">|</span>
             <a href="#" onclick="showConfirm('#springMessageText(
-                "confirm.delete","confirm.delete")', '$provider.url', '../delete?ids=$provider.id'); return false;"><img
+                "confirm.delete","confirm.delete")', '$provider.url', '../$provider.id/delete'); return false;"><img
                     src="$rootContextPath.getURI("images/ico_delete.png")" width="12" height="12"/><span
                     class="ico_font">#springMessageText("delete", "delete")</span></a>
         #end
