@@ -10,14 +10,14 @@
     <packaging>pom</packaging>
 
     <properties>
-        <dubbo_all_version>2.6.0</dubbo_all_version>
-        <dubbo_version>2.6.0</dubbo_version>
+        <dubbo_all_version>2.6.2</dubbo_all_version>
+        <dubbo_version>2.6.2</dubbo_version>
         <jfreechart_version>1.0.13</jfreechart_version>
         <velocity_version>1.7</velocity_version>
 
         <!-- Temporarily added for lower version compatibility  -->
         <spring_version>4.3.10.RELEASE</spring_version>
-        <fastjson_version>1.2.31</fastjson_version>
+        <fastjson_version>1.2.54</fastjson_version>
         <curator_version>2.12.0</curator_version>
         <jetty_version>6.1.26</jetty_version>
         <servlet_version>3.1.0</servlet_version>
