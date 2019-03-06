@@ -24,7 +24,7 @@ cd dubbo-ops/dubbo-admin && ./build.bat
 
 ```
 cd target
-java -jar dubbo-admin-0.0.1-SNAPSHOT.jar
+java -jar dubbo-admin-0.0.1.jar
 ```
 
 Visit http://localhost:7001
